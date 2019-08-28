@@ -179,6 +179,9 @@ class Request(object):
         self.user = message.get_user()
         self.stack = Stack(message.get_layers())
         self.register = register
+        self.next_state_name: Optional[Text] = None
+        self.jump_state_name: Optional[Text] = None
+        self.score: Optional[float] = None
         self.custom_content = {}
 
         self._locale_override = None

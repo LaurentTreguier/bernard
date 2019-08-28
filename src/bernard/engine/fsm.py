@@ -198,6 +198,7 @@ class FSM(object):
             score, trigger, state, dnr = max(results, key=lambda x: x[0])
 
             if score >= settings.MINIMAL_TRIGGER_SCORE:
+                request.score = score
                 return trigger, state, dnr
 
         return None, None, None
@@ -341,7 +342,9 @@ class FSM(object):
                 )
                 return
 
+            request.next_state_name = type(state).__name__
             state = await self._run_state(responder, state, trigger, request)
+            request.jump_state_name = type(state).__name__
 
             # noinspection PyBroadException
             try:
